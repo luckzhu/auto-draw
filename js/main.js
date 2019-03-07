@@ -147,6 +147,7 @@ function writeCode(precontent, content, fn) {
     let id = setTimeout(function run() {
         n = n + 1
         domCode.innerHTML = precontent + content.substring(0, n)
+        domCode.innerHTML = Prism.highlight(domCode.innerHTML, Prism.languages.css, 'css');
         domCode.scrollTop = domCode.scrollHeight
         myStyle.innerHTML = content.substring(0, n)
         if (n <= content.length) {
