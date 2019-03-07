@@ -1,6 +1,6 @@
-let duration = 10
-
+let duration = 50
 let styleContent = `
+/*首先呢，我需要个画板*/
 .canvas {
     display: flex;
     justify-content: center;
@@ -12,6 +12,7 @@ let styleContent = `
     overflow: hidden;
 }
 
+/*先画个头吧*/
 .head {
     width: 260px;
     height: 460px;
@@ -23,6 +24,7 @@ let styleContent = `
     transform: translateX(-50%);
 }
 
+/*黑色的头带*/
 .tenia {
     width: 260px;
     height: 30px;
@@ -34,6 +36,7 @@ let styleContent = `
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
+/*头带中的黑线，不仔细看看不见哦*/
 .tenia::after {
     content: '';
     width: 100%;
@@ -43,6 +46,7 @@ let styleContent = `
     top: 15px;
 }
 
+/*少有的不是复数的眼镜*/
 .glasses {
     width: 150px;
     height: 150px;
@@ -55,7 +59,6 @@ let styleContent = `
     transform: translateX(-50%);
     box-shadow: 1px 6px 18px -1px rgba(0, 0, 0, 0.75);
 }
-
 .glasses::after {
     content: '';
     width: 110px;
@@ -69,6 +72,7 @@ let styleContent = `
     transform: translateX(-50%);
 }
 
+/*眼白真多*/
 .eyewhite {
     width: 110px;
     height: 85px;
@@ -80,6 +84,7 @@ let styleContent = `
     transform: translateX(-50%);
 }
 
+/*看我的眼球是不是很黑*/
 .eyewhite>.eyeball {
     width: 40px;
     height: 40px;
@@ -90,7 +95,6 @@ let styleContent = `
     left: 50%;
     transform: translateX(-50%);
 }
-
 .eyewhite>.eyeball::after {
     content: '';
     width: 18px;
@@ -104,6 +108,7 @@ let styleContent = `
     box-shadow: 0px 0px 28px 9px rgba(125, 94, 48, 1);
 }
 
+/*再来点高光*/
 .eyehighlight {
     z-index: 1;
     width: 6px;
@@ -115,6 +120,7 @@ let styleContent = `
     right: 50%;
 }
 
+/*我在画嘴，我知道很难看见*/
 .mouth {
     width: 90px;
     height: 30px;
@@ -131,6 +137,8 @@ let styleContent = `
 writeCode('', styleContent, () => {
     console.log('完了')
 })
+
+
 
 function writeCode(precontent, content, fn) {
     let domCode = document.querySelector('#code')
@@ -149,4 +157,29 @@ function writeCode(precontent, content, fn) {
         }
 
     }, duration);
+}
+
+let buttons = document.querySelectorAll('button')
+
+for (let i in buttons) {
+    buttons[i].onclick = function (e) {
+        let speed = e.currentTarget.dataset.speed
+        e.currentTarget.classList.add('active')
+        let siblings = Array.prototype.filter.call(e.currentTarget.parentNode.children, function(child){
+            return child !== e.currentTarget;
+          })
+        for(let i in siblings){
+            siblings[i].classList.remove('active');
+        }
+        switch (speed) {
+            case 'slow':
+                duration = 100;
+                break;
+            case 'normal':
+                duration = 50;
+                break;
+            case 'fast':
+                duration = 10;
+        }
+    }
 }
